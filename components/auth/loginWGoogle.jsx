@@ -20,6 +20,7 @@ export default function LoginWithGoogle() {
 
     if (error) {
       console.error("Google login failed:", error.message);
+      alert("Login failed: " + error.message);
       setIsLoading(false);
       return;
     }

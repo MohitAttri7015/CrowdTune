@@ -15,7 +15,7 @@ const logoFont = Audiowide({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://yourdomain.com"),
+  metadataBase: new URL("https://crowd-tune.vercel.app"),
   title: {
     default: "CrowdTune – Let Everyone Vote on What Plays Next",
     template: "%s | CrowdTune",

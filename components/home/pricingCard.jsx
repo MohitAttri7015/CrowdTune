@@ -1,15 +1,18 @@
+"use client"
+
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 export default function PricingCard({
   name,
   price,
   description,
   features,
+  buttonHref = "/auth/login",
   buttonText,
   popular = false,
   variant = "default",
-  icon: Icon,
-  onButtonClick,
+  icon,
 }) {
   const isPro = variant === "pro";
   const isAdvance = variant === "advance";
@@ -63,7 +66,7 @@ export default function PricingCard({
               }
             `}
           >
-            {Icon && <Icon size={17} strokeWidth={1.8} />}
+            {icon}
           </div>
 
           {/* Popular badge */}
@@ -99,10 +102,11 @@ export default function PricingCard({
       </div>
 
       {/* Button */}
-      <button
-        onClick={onButtonClick}
+      <Link
+        href={buttonHref}
         className={`
           relative mt-6 h-10 w-full rounded-md
+          flex justify-center items-center
           text-xs font-medium
           transition-all duration-200
           cursor-pointer
@@ -114,7 +118,7 @@ export default function PricingCard({
         `}
       >
         {buttonText}
-      </button>
+      </Link>
 
       {/* Divider */}
       <div className="my-6 flex items-center gap-3">

@@ -1,4 +1,4 @@
-const baseUrl = "https://yourdomain.com"; 
+const baseUrl = "https://crowd-tune.vercel.app"; 
 
 export default function sitemap() {
   return [

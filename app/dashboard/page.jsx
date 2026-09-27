@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MoveUpLeft } from 'lucide-react';
+import { MoveUpLeft, User } from 'lucide-react';
 import Link from "next/link";
 import { createClient } from '@/lib/supabase/server';
 import Ferrofluid from "@/components/Ferrofluid";
@@ -56,15 +56,19 @@ export default async function DashboardPage() {
                 <div className="p-4 sm:p-6">
                     {/* Avatar + identity */}
                     <div className="flex flex-col items-center text-center">
-                        <div className="relative h-20 w-20 overflow-hidden rounded-full bg-neutral-100 sm:h-24 sm:w-24">
-                            <Image
-                                src={user?.user_metadata?.avatar_url || "/default-avatar.jpg"}
-                                alt="Avatar"
-                                fill
-                                priority
-                                sizes="96px"
-                                className="object-cover"
-                            />
+                        <div className="relative h-20 w-20 overflow-hidden rounded-full bg-neutral-100 sm:h-24 sm:w-24 flex items-center justify-center">
+                            {user?.user_metadata?.avatar_url ? (
+                                <Image
+                                    src={user.user_metadata.avatar_url}
+                                    alt="Avatar"
+                                    fill
+                                    priority
+                                    sizes="96px"
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <User size={32} strokeWidth={1.5} className="text-neutral-400" />
+                            )}
                         </div>
 
                         <h2 className="mt-4 text-lg font-medium text-neutral-900 sm:text-xl font-main">

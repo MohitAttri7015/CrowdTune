@@ -41,7 +41,11 @@ export default function Hero() {
 
                 <div className="w-full flex justify-center gap-4 font-main font-medium text-[13px]">
                     <Link
+<<<<<<< HEAD
                         href={user ? "/createSession" : "/auth/login"}
+=======
+                        href={user ? "/dashboard" : "/auth/login"}
+>>>>>>> aba1d8c9cb44ca32ecdb04524dc9292370576fb2
                         className="group flex items-center gap-2 bg-black text-white px-2 py-2 hover:bg-white hover:text-black transition-all duration-500 hover:border-black border border-black"
                     >
 

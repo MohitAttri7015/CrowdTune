@@ -1,5 +1,3 @@
-"use client";
-
 import {
     Sparkles,
     Zap,
@@ -83,19 +81,23 @@ export default function PricingSection() {
 
                 {/* Pricing Cards */}
                 <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 font-main">
-                    {pricingData.map((plan) => (
-                        <PricingCard
-                            key={plan.name}
-                            name={plan.name}
-                            price={plan.monthlyPrice ? parseFloat(plan.monthlyPrice) : plan.monthlyPrice}
-                            description={plan.description}
-                            features={plan.features}
-                            buttonText={plan.buttonText}
-                            popular={plan.popular}
-                            variant={plan.variant}
-                            icon={plan.icon}
-                        />
-                    ))}
+                    {pricingData.map((plan) => {
+                        const Icon = plan.icon;
+                        return (
+                            <PricingCard
+                                key={plan.name}
+                                name={plan.name}
+                                price={plan.monthlyPrice ? parseFloat(plan.monthlyPrice) : plan.monthlyPrice}
+                                description={plan.description}
+                                features={plan.features}
+                                buttonText={plan.buttonText}
+                                buttonHref="/auth/login"
+                                popular={plan.popular}
+                                variant={plan.variant}
+                                icon={<Icon size={17} strokeWidth={1.8} />}
+                            />
+                        )
+                    })}
                 </div>
 
                 {/* Bottom text */}

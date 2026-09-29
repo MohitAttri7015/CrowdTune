@@ -41,24 +41,41 @@ export default function Hero() {
 
                 <div className="w-full flex justify-center gap-4 font-main font-medium text-[13px]">
                     <Link
-<<<<<<< HEAD
-                        href={user ? "/createSession" : "/auth/login"}
-=======
                         href={user ? "/dashboard" : "/auth/login"}
->>>>>>> aba1d8c9cb44ca32ecdb04524dc9292370576fb2
                         className="group flex items-center gap-2 bg-black text-white px-2 py-2 hover:bg-white hover:text-black transition-all duration-500 hover:border-black border border-black"
                     >
-
                         <span className="bg-white px-2 py-1 group-hover:bg-black group-hover:text-white transition-all duration-500 border border-black">
                             <ChevronsRight size={20} className="group-hover:text-white text-black" />
                         </span>
                         Start a Session
                     </Link>
-                    <Link href="#how-it-works" className="border flex items-center border-black text-black px-4 py-2 hover:bg-black hover:text-white transition-all duration-500">
 
+                    <Link
+                        href="#how-it-works"
+                        className="border flex items-center border-black text-black px-4 py-2 hover:bg-black hover:text-white transition-all duration-500"
+                    >
                         How it works
                     </Link>
                 </div>
+                <div className="w-full flex justify-center gap-4 font-main font-medium text-[13px]">
+                    <Link
+                        href={user ? "/createSession" : "/auth/login"}
+                        className="group flex items-center gap-2 bg-black text-white px-2 py-2 hover:bg-white hover:text-black transition-all duration-500 hover:border-black border border-black"
+                    >
+                        <span className="bg-white px-2 py-1 group-hover:bg-black group-hover:text-white transition-all duration-500 border border-black">
+                            <ChevronsRight size={20} className="group-hover:text-white text-black" />
+                        </span>
+                        Start a Session
+                    </Link>
+
+                    <Link
+                        href="#how-it-works"
+                        className="border flex items-center border-black text-black px-4 py-2 hover:bg-black hover:text-white transition-all duration-500"
+                    >
+                        How it works
+                    </Link>
+                </div>
+
             </div>
         </div>
     )

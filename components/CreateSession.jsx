@@ -10,7 +10,7 @@ export default function CreateSession() {
             <div className="flex flex-col gap-4 font-main text-white w-full max-w-xs mb-6">
                 <label className="text-sm ">Enter session name</label>
 
-                <input type="text" className="border border-[#333] rounded-lg p-4 py-2 text-sm text-[#ccc]"/>
+                <input type="text" className="border border-[#333] rounded-lg px-4 py-2 text-sm text-[#ccc]"/>
             </div>
 
             <button

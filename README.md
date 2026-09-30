@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CrowdTune
 
-## Getting Started
+Let everyone vote on what plays next. A host starts a session and shares a
+code; guests add and vote on songs from their own phones (no app, no signup);
+the top-voted song plays next.
 
-First, run the development server:
+**Status:** early development. Hosts can sign in with Google and create
+sessions. The guest side (joining by code, adding songs, voting, the queue,
+QR code) is not built yet.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- [Next.js](https://nextjs.org) 16 (App Router), React 19, Tailwind CSS 4
+- [Supabase](https://supabase.com) for auth (Google OAuth) and Postgres
+- WebGL shader backgrounds via [`ogl`](https://github.com/oframe/ogl)
+
+## Getting started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Create your env file and fill in the Supabase values:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. In the Supabase dashboard, enable the Google provider
+   (Authentication -> Providers) and add
+   `http://localhost:3000/auth/callback` to the allowed redirect URLs.
+
+4. Create the `profiles` and `sessions` tables, then run
+   [`supabase/security-and-constraints.sql`](supabase/security-and-constraints.sql)
+   in the SQL editor. It sets up row-level security, server-side plan limits,
+   and the one-active-session-per-host constraint. Read its header first: it
+   lists the schema it assumes.
+
+5. Start the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000). To test from your phone
+   on the same network, set `NEXT_ALLOWED_DEV_ORIGINS` in `.env.local`
+   (see `.env.example`).
+
+## Plans
+
+Limits live in [`lib/sessions.js`](lib/sessions.js) and are mirrored in the SQL
+trigger, so keep the two in sync.
+
+| Plan       | Guests    | Session length | Custom logo |
+| ---------- | --------- | -------------- | ----------- |
+| Free       | 15        | 2 hours        | No          |
+| Party Pass | Unlimited | 24 hours       | No          |
+| Venue      | Unlimited | 30 days        | Yes         |
+
+## Project layout
+
+```
+app/
+  (marketing)/          landing page (hero, how it works, pricing)
+  auth/                 Google login page + OAuth callback route
+  dashboard/            host profile; create-session/action.js is the server action
+  createSession/        "create a session" page
+  session/[joinCode]/   host view of a session
+components/             UI, plus the WebGL effects (Ferrofluid, SideRays, LiquidGlassCluster)
+lib/sessions.js         plan limits, join codes, expiry helpers
+lib/supabase/           browser and server Supabase clients
+middleware.js           refreshes the session and protects /dashboard and /createSession
+supabase/               SQL for RLS, limits trigger and constraints
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` start the dev server
+- `npm run build` production build
+- `npm run start` run the production build
+- `npm run lint` run ESLint

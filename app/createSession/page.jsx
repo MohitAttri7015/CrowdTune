@@ -2,6 +2,8 @@ import SlideRays from '@/components/SideRays'
 import PauseWhenHidden from "@/components/PauseWhenHidden"
 import CreateSession from '@/components/CreateSession'
 import { createClient } from '@/lib/supabase/server';
+import { notExpiredFilter } from '@/lib/sessions';
+import { redirect } from 'next/navigation';
 
 
 
@@ -9,6 +11,7 @@ export default async function SessionPage() {
 
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/auth/login");
 
      const { data: profile } = await supabase
         .from("profiles")
@@ -21,7 +24,7 @@ export default async function SessionPage() {
         .select("join_code, name")
         .eq("host_id", user.id)
         .eq("status", "active")
-        .gt("expires_at", new Date().toISOString())
+        .or(notExpiredFilter())
         .maybeSingle();
 
     return (

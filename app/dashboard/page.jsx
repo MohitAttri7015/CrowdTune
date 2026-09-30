@@ -2,6 +2,7 @@ import Image from "next/image";
 import { MoveUpLeft, User } from 'lucide-react';
 import Link from "next/link";
 import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 import Ferrofluid from "@/components/Ferrofluid";
 import LogoutButton from '@/components/auth/logoutBtn';
 import PauseWhenHidden from '@/components/PauseWhenHidden'
@@ -9,6 +10,7 @@ import PauseWhenHidden from '@/components/PauseWhenHidden'
 export default async function DashboardPage() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/auth/login");
 
     const { data: profile } = await supabase
         .from("profiles")

@@ -1,9 +1,29 @@
 import SlideRays from '@/components/SideRays'
 import PauseWhenHidden from "@/components/PauseWhenHidden"
 import CreateSession from '@/components/CreateSession'
+import { createClient } from '@/lib/supabase/server';
 
 
-export default function SessionPage() {
+
+export default async function SessionPage() {
+
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+     const { data: profile } = await supabase
+        .from("profiles")
+        .select("plan")
+        .eq("id", user.id)
+        .single();
+
+    const { data: activeSession } = await supabase
+        .from("sessions")
+        .select("join_code, name")
+        .eq("host_id", user.id)
+        .eq("status", "active")
+        .gt("expires_at", new Date().toISOString())
+        .maybeSingle();
+
     return (
         <div className='w-full h-screen relative bg-black'>
             <div className="absolute inset-0 z-0">
@@ -22,9 +42,9 @@ export default function SessionPage() {
                     Create a new Session
                 </h1>
 
-                <CreateSession />
+                <CreateSession plan={profile?.plan ?? "free"} activeSession={activeSession} />
             </div>
         </div>
-    
+
     )
 }

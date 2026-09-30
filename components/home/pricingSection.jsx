@@ -37,6 +37,7 @@ const pricingData = [
             "24-hour session limit",
             "Visual themes for your voting page",
             "Manual playback",
+            "Your own logo on the voting page"
         ],
     },
 
@@ -50,7 +51,7 @@ const pricingData = [
         variant: "advance",
         features: [
             "Unlimited guests",
-            "No session limit, always on",
+            "For a whole month",
             "Most requested songs play automatically",
             "Your own logo on the voting page",
             "Full library of visual themes",
